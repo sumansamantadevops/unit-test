@@ -1,11 +1,17 @@
-import requests
-URL = "https://atg.world"
-try:
-    response = requests.head(URL)
-except Exception as e:
-    print(f"Fail: {str(e)}")
-else:
-    if response.status_code == 200:
-        print("Pass")
-    else:
-        print(f"NOT OK: HTTP response code {response.status_code}")
+import unittest
+from selenium import webdriver
+
+class TestWebsite(unittest.TestCase):
+    def setUp(self):
+        self.driver = webdriver.Chrome()
+        self.driver.maximize_window()
+
+    def test_website_loads_properly(self):
+        self.driver.get("https://www.atg.world")
+        self.assertEqual(self.driver.title, "ATG - Your Travel Guide")
+
+    def tearDown(self):
+        self.driver.quit()
+
+if __name__ == '__main__':
+    unittest.main()
